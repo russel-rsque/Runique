@@ -1,41 +1,14 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.runique.android.application.compose)
+    alias(libs.plugins.runique.jvm.ktor)
     alias(libs.plugins.mapsplatform.secrets.plugin)
 }
 
 android {
     namespace = "com.rosique.runique"
-    compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.rosique.runique"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    buildFeatures {
-        compose = true
     }
 }
 
