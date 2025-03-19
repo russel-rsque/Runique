@@ -32,8 +32,12 @@ fun IntroScreenRoot(
     IntroScreen(
         onAction = { action ->
             when (action) {
-                IntroAction.OnSignUpClick -> onSignUpClick
-                IntroAction.OnSingInClick -> onSignInClick
+                IntroAction.OnSignUpClick -> {
+                    onSignUpClick()
+                }
+                IntroAction.OnSingInClick -> {
+                    onSignInClick()
+                }
             }
         }
     )
@@ -82,7 +86,9 @@ fun IntroScreen(
                 isLoading = false,
                 modifier = Modifier
                     .fillMaxWidth(),
-                onClick = { onAction(IntroAction.OnSignUpClick) }
+                onClick = {
+                    onAction(IntroAction.OnSignUpClick)
+                }
             )
         }
     }
