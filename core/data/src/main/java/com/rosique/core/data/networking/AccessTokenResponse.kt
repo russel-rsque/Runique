@@ -1,10 +1,10 @@
-package com.rosique.auth.data
+package com.rosique.core.data.networking
 
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
 @InternalSerializationApi @Serializable
-data class RegisterRequest(
-    val email: String,
-    val password: String
+data class AccessTokenResponse(
+    val accessToken: String,
+    val expirationTimestamp: String
 )
