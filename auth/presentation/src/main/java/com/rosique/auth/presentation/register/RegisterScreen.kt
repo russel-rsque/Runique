@@ -30,19 +30,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rosique.auth.domain.UserDataValidator
-import com.rosique.core.presentation.designsystem.RuniqueTheme
-import com.rosique.core.presentation.designsystem.components.GradientBackground
-import org.koin.androidx.compose.koinViewModel
 import com.rosique.auth.presentation.R
 import com.rosique.core.presentation.designsystem.CheckIcon
 import com.rosique.core.presentation.designsystem.CrossIcon
 import com.rosique.core.presentation.designsystem.EmailIcon
 import com.rosique.core.presentation.designsystem.Poppins
 import com.rosique.core.presentation.designsystem.RuniqueGray
+import com.rosique.core.presentation.designsystem.RuniqueTheme
+import com.rosique.core.presentation.designsystem.components.GradientBackground
 import com.rosique.core.presentation.designsystem.components.RuniqueActionButton
 import com.rosique.core.presentation.designsystem.components.RuniquePasswordTextField
 import com.rosique.core.presentation.designsystem.components.RuniqueTextField
 import com.rosique.core.presentation.ui.ObserveAsEvents
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 
@@ -77,7 +77,13 @@ fun RegisterScreenRoot(
 
     RegisterScreen(
         state = viewModel.state,
-        onAction = viewModel::onAction
+        onAction = { action ->
+            when(action) {
+                is RegisterAction.OnLoginClick -> onSignInClick()
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
     )
 }
 
