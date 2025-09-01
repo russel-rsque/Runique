@@ -34,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.rosique.core.presentation.designsystem.components.RuniqueDialog
 import com.rosique.core.presentation.designsystem.components.RuniqueOutlinedActionButton
+import com.rosique.run.presentation.active_run.maps.TrackerMap
 import com.rosique.run.presentation.util.hasLocationPermission
 import com.rosique.run.presentation.util.hasNotificationPermission
 import com.rosique.run.presentation.util.shouldShowLocationPermissionRationale
@@ -144,6 +145,13 @@ private fun ActiveRunScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
         ) {
+            TrackerMap(
+                isRunFinished = state.isRunFinished,
+                currentLocation = state.currentLocation,
+                locations = state.runData.locations,
+                onSnapshot = { },
+                modifier = Modifier.fillMaxSize()
+            )
             RunDataCard(
                 elapsedTime = state.elapsedTime,
                 runData = state.runData,
