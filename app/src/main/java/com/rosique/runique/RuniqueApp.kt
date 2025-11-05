@@ -4,6 +4,7 @@ import android.app.Application
 import com.rosique.auth.data.di.authDataModule
 import com.rosique.auth.presentation.di.authViewModelModule
 import com.rosique.core.data.di.coreDateModule
+import com.rosique.core.database.di.databaseModule
 import com.rosique.run.location.di.locationModule
 import com.rosique.run.presentation.di.runPresentationModule
 import com.rosique.runique.di.appModule
@@ -33,7 +34,8 @@ class RuniqueApp: Application() {
                 appModule,
                 coreDateModule,
                 runPresentationModule,
-                locationModule
+                locationModule,
+                databaseModule
             )
         }
     }
