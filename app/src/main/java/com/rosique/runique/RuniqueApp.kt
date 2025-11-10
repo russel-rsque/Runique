@@ -6,6 +6,7 @@ import com.rosique.auth.presentation.di.authViewModelModule
 import com.rosique.core.data.di.coreDateModule
 import com.rosique.core.database.di.databaseModule
 import com.rosique.run.location.di.locationModule
+import com.rosique.run.network.di.networkModule
 import com.rosique.run.presentation.di.runPresentationModule
 import com.rosique.runique.di.appModule
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +36,8 @@ class RuniqueApp: Application() {
                 coreDateModule,
                 runPresentationModule,
                 locationModule,
-                databaseModule
+                databaseModule,
+                networkModule
             )
         }
     }
