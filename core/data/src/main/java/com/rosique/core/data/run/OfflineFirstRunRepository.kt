@@ -7,6 +7,7 @@ import com.rosique.core.domain.run.RemoteRunDataSource
 import com.rosique.core.domain.run.Run
 import com.rosique.core.domain.run.RunId
 import com.rosique.core.domain.run.RunRepository
+import com.rosique.core.domain.run.SyncRunScheduler
 import com.rosique.core.domain.util.DataError
 import com.rosique.core.domain.util.EmptyResult
 import com.rosique.core.domain.util.Result
@@ -24,7 +25,8 @@ class OfflineFirstRunRepository(
     private val remoteRunDataSource: RemoteRunDataSource,
     private val applicationScope: CoroutineScope,
     private val runPendingSyncDao: RunPendingSyncDao,
-    private val sessionStorage: SessionStorage
+    private val sessionStorage: SessionStorage,
+    private val syncRunScheduler: SyncRunScheduler
 ) : RunRepository {
     override fun getRuns(): Flow<List<Run>> {
         return localRunDataSource.getRuns()
@@ -57,11 +59,20 @@ class OfflineFirstRunRepository(
             mapPicture = mapPicture
         )
 
-        return when(remoteResult) {
+        return when (remoteResult) {
             is Result.Error -> {
-                // TODO: Handle sync when post unsuccessful
+                applicationScope.launch {
+                    syncRunScheduler.scheduleSync(
+                        type = SyncRunScheduler.SyncType.CreateRun(
+                            run = runWithId,
+                            mapPictureBytes = mapPicture
+                        )
+                    )
+                }.join()
+
                 Result.Success(Unit)
             }
+
             is Result.Success -> {
                 applicationScope.async {
                     localRunDataSource.upsertRun(remoteResult.data).asEmptyDataResult()
@@ -85,6 +96,13 @@ class OfflineFirstRunRepository(
             remoteRunDataSource.deleteRun(id)
         }.await()
 
+        if (remoteResult is Result.Error) {
+            applicationScope.launch {
+                syncRunScheduler.scheduleSync(
+                    type = SyncRunScheduler.SyncType.DeleteRun(id)
+                )
+            }.join()
+        }
     }
 
     override suspend fun syncPendingRuns() {
@@ -102,7 +120,7 @@ class OfflineFirstRunRepository(
                 .await()
                 .map {
                     launch {
-                        when(remoteRunDataSource.postRun(it.run.toRun(), it.mapPictureBytes)) {
+                        when (remoteRunDataSource.postRun(it.run.toRun(), it.mapPictureBytes)) {
                             is Result.Error -> Unit
                             is Result.Success -> {
                                 applicationScope.launch {
@@ -117,7 +135,7 @@ class OfflineFirstRunRepository(
                 .await()
                 .map {
                     launch {
-                        when(remoteRunDataSource.deleteRun(it.runId)) {
+                        when (remoteRunDataSource.deleteRun(it.runId)) {
                             is Result.Error -> Unit
                             is Result.Success -> {
                                 applicationScope.launch {
