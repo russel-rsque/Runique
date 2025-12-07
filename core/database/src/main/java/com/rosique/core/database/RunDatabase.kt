@@ -2,6 +2,7 @@ package com.rosique.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.rosique.core.database.dao.AnalyticsDao
 import com.rosique.core.database.dao.RunDao
 import com.rosique.core.database.dao.RunPendingSyncDao
 import com.rosique.core.database.entity.DeletedRunSyncEntity
@@ -20,4 +21,5 @@ abstract class RunDatabase : RoomDatabase() {
 
     abstract val runDao: RunDao
     abstract val runPendingSyncDao: RunPendingSyncDao
+    abstract val analyticsDao: AnalyticsDao
 }
