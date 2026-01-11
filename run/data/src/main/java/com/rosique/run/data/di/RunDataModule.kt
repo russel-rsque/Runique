@@ -5,6 +5,8 @@ import com.rosique.run.data.CreateRunWorker
 import com.rosique.run.data.DeleteRunWorker
 import com.rosique.run.data.FetchRunsWorker
 import com.rosique.run.data.SyncRunWorkerScheduler
+import com.rosique.run.data.connectivity.PhoneToWatchConnector
+import com.rosique.run.domain.WatchConnector
 import org.koin.androidx.workmanager.dsl.workerOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -16,4 +18,5 @@ val runDataModule = module {
     workerOf(::DeleteRunWorker)
 
     singleOf(::SyncRunWorkerScheduler).bind<SyncRunScheduler>()
+    singleOf(::PhoneToWatchConnector).bind<WatchConnector>()
 }
