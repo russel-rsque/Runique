@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rosique.core.presentation.designsystem.RuniqueTheme
 import com.rosique.core.presentation.ui.formatted
+import com.rosique.core.presentation.ui.toFormattedHeartRate
 import com.rosique.core.presentation.ui.toFormattedKm
 import com.rosique.core.presentation.ui.toFormattedPace
 import com.rosique.run.domain.RunData
@@ -59,6 +60,12 @@ fun RunDataCard(
             RunDataItem(
                 title = stringResource(R.string.distance),
                 value = (runData.distanceMeters / 1000.0).toFormattedKm(),
+                modifier = Modifier
+                    .defaultMinSize(75.dp)
+            )
+            RunDataItem(
+                title = stringResource(R.string.heart_rate),
+                value = runData.heartRates.lastOrNull().toFormattedHeartRate(),
                 modifier = Modifier
                     .defaultMinSize(75.dp)
             )
@@ -106,7 +113,8 @@ private fun RunDataCardPreview() {
             elapsedTime = 10.minutes,
             runData = RunData(
                 distanceMeters = 3124,
-                pace = 3.minutes
+                pace = 3.minutes,
+                heartRates = listOf(150)
             )
         )
     }

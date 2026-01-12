@@ -73,4 +73,5 @@ dependencies {
 
     implementation(projects.core.connectivity.domain)
     implementation(projects.core.connectivity.data)
+    implementation(projects.core.notification)
 }

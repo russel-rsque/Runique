@@ -11,8 +11,8 @@ import androidx.navigation.navigation
 import com.rosique.auth.presentation.intro.IntroScreenRoot
 import com.rosique.auth.presentation.login.LoginScreenRoot
 import com.rosique.auth.presentation.register.RegisterScreenRoot
+import com.rosique.core.notification.ActiveRunService
 import com.rosique.run.presentation.active_run.ActiveRunScreenRoot
-import com.rosique.run.presentation.active_run.service.ActiveRunService
 import com.rosique.run.presentation.run_overview.RunOverviewScreenRoot
 
 @Composable
