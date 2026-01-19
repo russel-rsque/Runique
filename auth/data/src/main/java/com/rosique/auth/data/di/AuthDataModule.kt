@@ -1,7 +1,7 @@
 package com.rosique.auth.data.di
 
 import com.rosique.auth.data.AuthRepositoryImpl
-import com.rosique.auth.data.EmailPatterValidator
+import com.rosique.auth.data.EmailPatternValidator
 import com.rosique.auth.domain.AuthRepository
 import com.rosique.auth.domain.PatternValidator
 import com.rosique.auth.domain.UserDataValidator
@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val authDataModule = module {
     single<PatternValidator> {
-        EmailPatterValidator
+        EmailPatternValidator
     }
     singleOf(::UserDataValidator)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()

@@ -117,7 +117,7 @@ class RunningTracker(
                 } else {
                     listOf(locationTimestamp)
                 }
-                val newLocationList = currentLocations.replaceLast(lastLocations)
+                val newLocationList = currentLocations.replaceLast(lastLocations.distinct())
 
                 val distanceMeters = LocationDataCalculator.getTotalDistanceInMeters(
                     locations = newLocationList
